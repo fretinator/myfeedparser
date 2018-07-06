@@ -15,10 +15,10 @@ myItems = []
 for feed in feeds:
 	d = feedparser.parse(feed);
 
-	print "--------------------------------"
-	print "Reading " + d.feed.title + "..."
+	print("--------------------------------")
+	print("Reading " + d.feed.title + "...")
 	#print d.feed.subtitle
-	print "--------------------------------"
+	print("--------------------------------")
 
 	for post in d.entries:
 		#print post.title
@@ -27,12 +27,12 @@ for feed in feeds:
 		#print post.updated_parsed + "\n"
 		myItems.append(post)
 
-myItems.sort(reverse=True, key=lambda item: item.updated_parsed if hasattr(item, 'updated_parsed') else "zzzzzzzz")
+myItems.sort(reverse=True, key=lambda item: item.updated if hasattr(item, 'updated') else "zzzzzzzz")
 
 for item in myItems:
-	print item.title
-	print item.link
+	print(item.title)
+	print(item.link)
 	if hasattr(item, 'updated'):
-		print item.updated + "\n"
+		print(item.updated + "\n")
 	else:
-		print "Unknown update time"
+		print("Unknown update time")
