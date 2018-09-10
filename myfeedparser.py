@@ -15,16 +15,17 @@ myItems = []
 for feed in feeds:
 	d = feedparser.parse(feed);
 
+	# Try to get date the current feed was built
+
 	print("--------------------------------")
 	print("Reading " + d.feed.title + "...")
 	#print d.feed.subtitle
 	print("--------------------------------")
 
 	for post in d.entries:
-		#print post.title
-		#print post.link 
-		#print post.updated
-		#print post.updated_parsed + "\n"
+		if not(hasattr(post, 'updated')) and hasattr(d, 'lastBuildDate'):
+			post['updated'] = d['lastBuildDate']
+
 		myItems.append(post)
 
 myItems.sort(reverse=True, key=lambda item: item.updated if hasattr(item, 'updated') else "zzzzzzzz")
@@ -35,4 +36,4 @@ for item in myItems:
 	if hasattr(item, 'updated'):
 		print(item.updated + "\n")
 	else:
-		print("Unknown update time")
+		print("Unknown update time\n")
